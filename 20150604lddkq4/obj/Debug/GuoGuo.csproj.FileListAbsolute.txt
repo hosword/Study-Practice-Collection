@@ -1,0 +1,7 @@
+E:\php_job\3kis\app\KISJS\GuoGuo\bin\GuoGuo.dll
+E:\php_job\3kis\app\KISJS\GuoGuo\bin\GuoGuo.pdb
+E:\php_job\3kis\app\KISJS\GuoGuo\obj\Debug\GuoGuo.csprojResolveAssemblyReference.cache
+E:\php_job\3kis\app\KISJS\GuoGuo\obj\Debug\GuoGuo.dll
+E:\php_job\3kis\app\KISJS\GuoGuo\obj\Debug\GuoGuo.pdb
+E:\ts_job\GuoGuo\obj\Debug\GuoGuo.csprojResolveAssemblyReference.cache
+E:\php_job\3kis\app\xxkx\guoguo\obj\Debug\GuoGuo.csprojResolveAssemblyReference.cache

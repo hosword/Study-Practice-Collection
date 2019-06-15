@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<title>流动的空气</title>
+	</head>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			border: 0;
+		}
+	</style>
+	<!--<script src="cordova.js"></script>-->
+	<script src="cjs/easeljs-0.8.0.min.js"></script>
+	<script src="cjs/preloadjs-0.6.0.min.js"></script>
+	<script src="cjs/tweenjs-0.6.0.min.js"></script>
+
+	<script src="view/KISTouchScrollHelper.js"></script>
+	<script src="events/ProjectEvent.js"></script>
+	<script src="events/ExamEvent.js"></script>
+	<script src="events/ToolEvent.js"></script>
+	<script src="page/BasePage.js"></script>
+	<script src="page/SelecterPage.js"></script>
+	<script src="page/StartPage.js"></script>
+	<script src="page/ThumbList.js"></script>
+	<script src="page/REItem.js"></script>
+	<script src="page/LookPage.js"></script>
+	<script src="page/DoPage.js"></script>
+	<script src="page/InstructionPage.js"></script>
+	<script src="page/StudyPage.js"></script>
+	<script src="exam/BaseExam.js"></script>
+	<script src="exam/look/LookExam0.js"></script>
+	<script src="exam/do/DoExam0.js"></script>
+	<script src="exam/do/ToolContent.js"></script>
+	<script src="exam/MStudyPage.js"></script>
+	<script src="view/bubble/Boy.js"></script>
+	<script src="view/toolbox/ToolBox.js"></script>
+	<script src="view/toolbox/ToolBar.js"></script>
+	<script src="view/toolbox/ToolItem.js"></script>
+	<script src="view/KISSprite.js"></script>
+	<script src="view/KISHelper.js"></script>
+	<script src="view/DirectionType.js"></script>
+	<script src="view/dialog/Alert.js"></script>
+	<script src="view/dialog/Confirm.js"></script>
+	<script src="view/dialog/ExamMenu.js"></script>
+	<script src="view/dialog/QuitApp.js"></script>
+	<script src="view/dialog/WModalBG.js"></script>
+	<script src="Project.js"></script>
+	<script>
+		var stage;
+		var lib;
+		var project;
+
+		function onDeviceReady() {
+			stage = new createjs.Stage("gameView");
+			//stage.enableMouseOver(20);
+			stage.mouseMoveOutside = true;
+			createjs.Touch.enable(stage);
+			lib = new createjs.LoadQueue();
+			lib.on("complete", handleComplete);
+			lib.on("progress", handleProgress);
+			lib.loadManifest([{
+					id: "BTEU",
+					src: "images/BTEU.jpg"
+				},
+				//{ id: "SP_0", src: "images/SP_0.png" },
+				{
+					id: "SP_1",
+					src: "images/SP_1.png"
+				}, {
+					id: "SP_2",
+					src: "images/SP_2.png"
+				}, {
+					id: "btns",
+					src: "images/btns.png"
+				}, {
+					id: "te_0",
+					src: "images/te_0.png"
+				}, {
+					id: "SYRT",
+					src: "images/SYRT.png"
+				}, {
+					id: "SEBTN",
+					src: "images/SEBTN.png"
+				}, {
+					id: "SYT",
+					src: "images/SYT.png"
+				}, {
+					id: "ldst",
+					src: "images/ldst.png"
+				}, {
+					id: "clod0",
+					src: "images/cloud0.png"
+				}, {
+					id: "BPT",
+					src: "images/BPT.png"
+				}, {
+					id: "PT0",
+					src: "images/PT0.png"
+				}, {
+					id: "PT1",
+					src: "images/PT1.png"
+				}, {
+					id: "PT2",
+					src: "images/PT2.png"
+				}, {
+					id: "IFtxt",
+					src: "images/IFtxt.png"
+				}, {
+					id: "TBB",
+					src: "images/TBB.png"
+				}, {
+					id: "DPT",
+					src: "images/DPT.png"
+				}, {
+					id: "PT",
+					src: "images/PT.png"
+				}, {
+					id: "Boy",
+					src: "images/Boy.png"
+				}, {
+					id: "BBP",
+					src: "images/BBP.png"
+				}, {
+					id: "TBI",
+					src: "images/TBI.png"
+				}, {
+					id: "BBC",
+					src: "images/BBC.png"
+				}, {
+					id: "ART",
+					src: "images/ART.png"
+				}, {
+					id: "ATC",
+					src: "images/ATC.png"
+				}, {
+					id: "EMD",
+					src: "images/EMD.png"
+				}, {
+					id: "BPD",
+					src: "images/BPD.png"
+				}, {
+					id: "QAC",
+					src: "images/QAC.png"
+				}, {
+					id: "XXC",
+					src: "images/XXC.png"
+				}, {
+					id: "GBG",
+					src: "images/GBG.png"
+				}, {
+					id: "XXT",
+					src: "images/XXT.png"
+				}, {
+					id: "XBN",
+					src: "images/XBN.png"
+				},
+				//kyk sy1_start
+				{
+					id: "XZT",
+					//小纸条
+					src: "images/kyk/XZT.png"
+				}, {
+					id: "LZ",
+					//蜡烛身
+					src: "images/kyk/LZ.png"
+				}, {
+					id: "LZHY",
+					//蜡烛火焰
+					src: "images/kyk/LZHY.png"
+				}, {
+					id: "XXJL",
+					//现象结论图标
+					src: "images/kyk/XXJL.png"
+				}, {
+					id: "BS",
+					//博士
+					src: "images/kyk/BS.png"
+				}, 
+				
+				//kyk sy1_end
+				{
+					id: "Num",
+					src: "images/Num.png"
+				}
+			]);
+			var arr = [
+				["BSky", "images/BSky.png"],
+				["SP_0", "images/SP_0.png"]
+			];
+			var l = arr.length;
+			for (var i = 0; i < l; i++) {
+				var img = new Image();
+				img.src = arr[i][1];
+				img.id = arr[i][0];
+				lib._loadItemsById[img.id] = img;
+				lib._loadedResults[img.id] = img;
+			}
+		};
+
+		function trace() {
+			var str = ""
+			for (var i = 0; i < arguments.length; i++) {
+				if (i > 0) {
+					str += ",";
+				}
+				str += arguments[i];
+			}
+			console.log(str);
+		}
+
+		function handleProgress(e) {
+			//显示加载进度
+			var canvas = document.getElementById("gameView");
+			var ctx = canvas.getContext("2d");
+			ctx.clearRect(0, 0, canvas.width + 1, canvas.height + 1);
+			var w = 200,
+				h = 30;
+			var x = Math.ceil((canvas.width - w) / 2);
+			var y = Math.ceil((canvas.height - h) / 2);
+			ctx.fillStyle = '#FF0000';
+			ctx.fillRect(x + 1, y + 1, (w - 2) * e.loaded / e.total, h - 2);
+			ctx.strokeStyle = "#000000";
+			ctx.strokeRect(x, y, w, h);
+		}
+
+		function handleComplete() {
+			createjs.Ticker.addEventListener("tick", stage);
+			KISHelper.init();
+			var pro = new Project();
+			project = pro;
+			stage.addChild(pro);
+			resizeWindow();
+			pro.start();
+			stage.update();
+			/*
+			//查看点击的位置
+			var a = createjs.DisplayObject._hitTestCanvas;
+			document.body.appendChild(a);
+			a.width = 50;
+			a.height = 50;
+			*/
+		}
+
+		function getStageSize() {
+			var h = document.documentElement.clientHeight;
+			var w = document.documentElement.clientWidth;
+			if (h <= 0) {
+				return {
+					width: document.body.clientWidth,
+					height: document.body.clientHeight
+				};
+			} else {
+				return {
+					width: w,
+					height: h
+				};
+			}
+		}
+
+		function scaleImageSize(width, height, b_width, b_height) {
+			var rw = width / b_width;
+			var rh = height / b_height;
+			var rr = width / height;
+			if (rw > rh) {
+				width = b_width;
+				height = width / rr;
+			} else if (rw < rh) {
+				height = b_height;
+				width = height * rr;
+			} else {
+				width = b_width;
+				height = b_height;
+			}
+			return new createjs.Rectangle(0, 0, width, height);
+		}
+
+		function resizeWindow() {
+			project.setSize(1135, 640);
+			return;
+			if (project) {
+				var s = getStageSize();
+				var orect = project.getOriInnserSize();
+				var rect = scaleImageSize(orect.width, orect.height, s.width, s.height);
+				var sX = rect.width / orect.width;
+				var sY = rect.height / orect.height;
+				var ex = (s.width - rect.width) / 2;
+				var ey = (s.height - rect.height) / 2;
+				//缩放大小Project以适配窗口大小
+				project.scaleX = sX;
+				project.scaleY = sY;
+				//rect.x = -ex / sX;
+				//rect.y = -ey / sY;
+				rect.width = Math.round(s.width / sX);
+				rect.height = Math.round(s.height / sY);
+				project.setSize(rect.width, rect.height);
+				stage.canvas.width = s.width;
+				stage.canvas.height = s.height;
+				stage.update();
+			}
+		}
+
+		function onBackKeyDown(e) {
+			project.dispatchEvent(new createjs.Event(ProjectEvent.Exit_Project));
+		}
+		document.addEventListener("touchstart", function() {
+			return false;
+		}, false);
+		document.addEventListener('deviceready', onDeviceReady, false);
+		document.addEventListener('backbutton', onBackKeyDown, false);
+		window.addEventListener("resize", resizeWindow);
+	</script>
+
+	<body onload="onDeviceReady()" style="overflow:hidden;">
+		<canvas id="gameView" style="overflow:hidden;" width="1135" height="640">
+			不支持HTML5 Canvas
+		</canvas>
+		<!--
+<script src="js/js_KISCore/1@StartPart.js"></script>
+-->
+	</body>
+
+</html>
